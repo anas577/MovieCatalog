@@ -1,17 +1,29 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Watchlist</ion-title>
   </ion-toolbar>
+
+    <ion-segment mode="ios" [value]="segment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="watchlist">
+        <ion-label>Watchlist</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="seen">
+        <ion-label>Seen</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item *ngFor="let movie of displayedMovies" class="ion" [routerLink]="['/tabs/tab1', movie.id]">
+      <ion-avatar slot="start">
+        <ion-img [src]="imageBaseUrl+'/w92'+ movie.poster_path"></ion-img>
+      </ion-avatar>
+      <ion-label>{{ movie.title }}</ion-label>
+      <ion-badge slot="end" color="warning">{{ movie.vote_average | number:'1.1-1' }}</ion-badge>
+    </ion-item>
+  </ion-list>
 </ion-content>

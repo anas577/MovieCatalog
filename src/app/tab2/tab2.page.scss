@@ -1,0 +1,17 @@
+.image-container{
+  position: relative;
+  max-height: 330px;
+  max-width: 220px;
+
+}
+ion-badge{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  z-index: 10;
+}
+ion-img::part(image){
+  border-radius: 10px;
+
+}

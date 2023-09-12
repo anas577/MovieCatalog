@@ -1,17 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Trending Movies</ion-title>
+
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+<ion-content>
+  <ion-grid>
+    <ion-row >
+      <ion-col *ngFor="let movie of topRatedMovies" size="6" [routerLink]="[movie.id]">
+        <div class="image-container">
+          <ion-badge mode="md" color="warning">{{ movie.vote_average | number:'1.1-1'}}</ion-badge>
+          <ion-img [src]="imageBaseUrl+'/w220_and_h330_face'+ movie.poster_path"></ion-img>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll (ionInfinite)="loadMore($any($event))">
+    <ion-infinite-scroll-content
+      loading-spinner="bubbles"
+      loading-text="Loading more movies..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
