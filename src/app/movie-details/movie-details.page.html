@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{movie?.title}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/movies" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="movie">
+    <img [src]="imageBaseUrl + '/w400' + movie.backdrop_path" alt="the movie's poster" class="movie-img">
+    <ion-card-header>
+          <ion-button (click)="isInWatchlist ? removeFromWatchlist(movie.id) : addToWatchlist(movie.id)" id="addedWatch" [color]="isInWatchlist ? 'warning' : 'primary'" [disabled]="isInSeen">
+            <ion-icon name="bookmark-outline" class="save" slot="start"></ion-icon>
+            <p>{{isInWatchlist? 'Remove from Watchlist':'Add to Watchlist'}}</p>
+          </ion-button>
+          <ion-toast trigger="addedWatch" message="You've added the movie to your watchlist" [duration]="3000"></ion-toast>
+          <ion-button (click)="isInSeen ? removeFromSeen(movie.id) : addToSeen(movie.id)" id="addedSeen" [color]="isInSeen ? 'warning' : 'primary'">
+            <ion-icon name="eye-outline" class="save" slot="start"></ion-icon>
+            <p>{{isInSeen? 'Remove from Seen':'Add to seen'}}</p>
+          </ion-button>
+          <ion-toast trigger="addedSeen" message="You've added the movie to your seen list" [duration]="3000"></ion-toast>
+
+      <ion-card-title>{{ movie.title}}</ion-card-title>
+      <ion-card-subtitle>{{ movie.tagline}}</ion-card-subtitle>
+      <ion-text color="tertiary">
+        <span *ngFor="let g of movie.genres; let isLast = last">
+          {{ g.name }} {{ !isLast ? '·' : ''}}
+        </span>
+      </ion-text>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label color="medium">{{ movie.overview }}</ion-label>
+
+      <ion-item lines="none">
+        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+        <ion-label>{{movie.release_date | date: 'y'}}</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-icon name="hourglass-outline" slot="start"></ion-icon>
+        <ion-label>{{ transformMinute(movie.runtime)}}</ion-label>
+      </ion-item>
+
+    </ion-card-content>
+    <ion-title class="ion-text-left">Cast</ion-title>
+    <ion-list>
+      <ion-item *ngFor="let c of credits">
+        <ion-avatar slot="start">
+          <img [src]="imageBaseUrl + '/w185' + c.profile_path" alt="the actor's profile picture">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ c.name }}</h2>
+          <p>{{ c.character }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+
+  <ion-title class="ion-padding">Other people also liked</ion-title>
+  <swiper-container slides-per-view="3">
+    <swiper-slide *ngFor="let m of recommendedMovies">
+      <img [src]="imageBaseUrl+'/w220_and_h330_face'+ m.poster_path" [routerLink]= "['/tabs/tab1', m.id]">
+    </swiper-slide>
+  </swiper-container>
+
+</ion-content>
+<!--    <swiper-container slides-per-view="3">-->
+<!--        <swiper-slide *ngFor="let movie of recom" ">-->
+<!--          <img [src]="imageBaseUrl+'/w220_and_h330_face'+ movie.poster_path" [routerLink]= "['/tabs/tab1', movie.id]">-->
+<!--        </swiper-slide>-->
+<!--    </swiper-container>-->
+
+
+
+<ion-footer>
+  <ion-tabs>
+
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="tab1" #tab1>
+        <ion-icon [name]="tab1.selected ? 'home' : 'home-outline'"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="tab2" #tab2>
+        <ion-icon [name]="tab2.selected ? 'search' : 'search-outline'"></ion-icon>
+        <ion-label>Discover</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="tab3" #tab3>
+        <ion-icon [name]="tab3.selected ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+        <ion-label>Watchlist</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+  </ion-tabs>
+</ion-footer>
+
+
+
+
+
