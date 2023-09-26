@@ -19,7 +19,7 @@ export class MovieService {
   constructor(private http: HttpClient) {
   }
 
-  getTopRatedMovies(page = 1): Observable<ApiResult> {
+  getTopRatedMovies(page = 1):Observable<ApiResult> {
     return this.http.get<ApiResult>(`${environment.baseUrl}/movie/popular?api_key=${environment.apiKey}&page=${page}`);
   }
 

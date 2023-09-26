@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {ApiResult, MovieService} from "../services/movie.service";
+import {MovieService} from "../services/movie.service";
 import {environment} from "../../environments/environment";
 import { Storage } from '@ionic/storage';
 import { register} from "swiper/element/bundle";
-import {load} from "@angular-devkit/build-angular/src/utils/server-rendering/esm-in-memory-file-loader";
+
 register();
 
 @Component({
